@@ -1,47 +1,17 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ru">
 <head>
-    <title>Рисование коробки</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>2048</title>
 </head>
-<body>
-<canvas id="myCanvas" width="400" height="400" style="border:1px solid black;"></canvas>
+<body style="background: #2b2d30">
+<canvas id="gameField" width="400" height="400" style="border:1px solid white;"></canvas>
 
-<script>
-    // Получаем контекст для рисования
-    var canvas = document.getElementById('myCanvas');
-    var ctx = canvas.getContext('2d');
+<script src="scripts/box.js" type="text/javascript">
 
-    // Функция для рисования коробки
-    function drawBox(x, y, width, height) {
-        // Длина сдвига для 3D эффекта
-        var shift = 30;
-
-        // Рисуем переднюю часть коробки
-        ctx.strokeRect(x, y, width, height);
-
-        // Рисуем боковые линии для 3D эффекта
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + shift, y - shift);
-        ctx.lineTo(x + shift, y - shift + height);
-        ctx.lineTo(x, y + height);
-        ctx.closePath();
-        ctx.stroke();
-
-        // Рисуем заднюю часть коробки
-        ctx.strokeRect(x + shift, y - shift, width, height);
-
-        // Соединяем переднюю и заднюю части боковыми линиями
-        ctx.beginPath();
-        ctx.moveTo(x + width, y);
-        ctx.lineTo(x + shift + width, y - shift);
-        ctx.moveTo(x + width, y + height);
-        ctx.lineTo(x + shift + width, y + height - shift);
-        ctx.stroke();
-    }
-
-    // Рисуем коробку
-    drawBox(100, 200, 100, 100);
 </script>
 </body>
 </html>
