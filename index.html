@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Рисование коробки</title>
+</head>
+<body>
+<canvas id="myCanvas" width="400" height="400" style="border:1px solid black;"></canvas>
+
+<script>
+    // Получаем контекст для рисования
+    var canvas = document.getElementById('myCanvas');
+    var ctx = canvas.getContext('2d');
+
+    // Функция для рисования коробки
+    function drawBox(x, y, width, height) {
+        // Длина сдвига для 3D эффекта
+        var shift = 30;
+
+        // Рисуем переднюю часть коробки
+        ctx.strokeRect(x, y, width, height);
+
+        // Рисуем боковые линии для 3D эффекта
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + shift, y - shift);
+        ctx.lineTo(x + shift, y - shift + height);
+        ctx.lineTo(x, y + height);
+        ctx.closePath();
+        ctx.stroke();
+
+        // Рисуем заднюю часть коробки
+        ctx.strokeRect(x + shift, y - shift, width, height);
+
+        // Соединяем переднюю и заднюю части боковыми линиями
+        ctx.beginPath();
+        ctx.moveTo(x + width, y);
+        ctx.lineTo(x + shift + width, y - shift);
+        ctx.moveTo(x + width, y + height);
+        ctx.lineTo(x + shift + width, y + height - shift);
+        ctx.stroke();
+    }
+
+    // Рисуем коробку
+    drawBox(100, 200, 100, 100);
+</script>
+</body>
+</html>
