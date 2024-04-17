@@ -4,6 +4,7 @@ const WIDTH = 600;
 
 // let i_shape;
 // let j_shape;
+// let l_shape;
 // let o_shape;
 // let s_shape;
 // let t_shape;
@@ -14,14 +15,7 @@ const WIDTH = 600;
 function setup() {
     window.canvas = createCanvas(WIDTH, HEIGHT);
     setShapeIDs();
-    testShape = new Shape(z_shape, createVector(10, 10));
-
-    // // Вызов moveDown() каждую секунду
-    // setInterval(() => {
-    //     testShape.moveDown();
-    // }, 800); // 1000 миллисекунд = 1 секунда
-
-
+    testShape = new Shape(l_shape, createVector(15, 15));
 }
 
 function draw(){

@@ -35,36 +35,25 @@ class Shape{
 
     //TODO Make correct rotations
     rotateShape() {
-        // Точка вращения — из shapeID
         let rotationPoint = this.shapeID.rotationPoint;
+        const angle = Math.PI/2;
 
-        // Поворачиваем каждый блок фигуры
         for (let i = 0; i < this.blocks.length; i++) {
-            // Получаем текущую позицию блока
-            let block = this.blocks[i];
 
-            // Вычисляем относительные координаты блока относительно точки вращения
-            let relativeX = block.currentGridPosition.x - rotationPoint.x;
-            let relativeY = block.currentGridPosition.y - rotationPoint.y;
+            let x_rotated = ((this.blocks[i].currentGridPosition.x - rotationPoint.x) * Math.cos(angle)) - ((rotationPoint.y - this.blocks[i].currentGridPosition.y) * Math.sin(angle)) + rotationPoint.x
+            let y_rotated = rotationPoint.y - ((rotationPoint.y - this.blocks[i].currentGridPosition.y) * Math.cos(angle)) + ((this.blocks[i].currentGridPosition.x - rotationPoint.x) * Math.sin(angle))
 
-            // Поворачиваем блок на 90 градусов (угол в радианах: π/2)
-            let newRelativeX = -relativeY;
-            let newRelativeY = relativeX;
+            this.blocks[i].currentGridPosition = createVector(int(x_rotated), int(y_rotated));
 
-            // Обновляем текущую позицию блока
-            block.currentGridPosition.x = rotationPoint.x + newRelativeX;
-            block.currentGridPosition.y = rotationPoint.y + newRelativeY;
-
-            // Отладочное сообщение для проверки новых координат блоков
-            console.log(`Block ${i}: x = ${block.currentGridPosition.x}, y = ${block.currentGridPosition.y}`);
+            // Вывод новой позиции блока
+            console.log(`Block at (${this.blocks[i].currentGridPosition.x}, ${this.blocks[i].currentGridPosition.y})`);
         }
     }
-
-
 }
 
 let i_shape;
 let j_shape;
+let l_shape;
 let o_shape;
 let s_shape;
 let t_shape;
@@ -79,6 +68,10 @@ function setShapeIDs(){
 
     j_shape = {blockPositions : [createVector(0,0), createVector(0,1), createVector(0,2),
             createVector(-1,2)], rotationPoint : createVector(0, 1), color : "#f6a004"
+    }
+
+    l_shape = {blockPositions : [createVector(0,0), createVector(0,1), createVector(0,2),
+            createVector(1,2)], rotationPoint : createVector(0, 1), color : "#a12c2b"
     }
 
      o_shape = {blockPositions : [createVector(0,0), createVector(1,0), createVector(1,1),
