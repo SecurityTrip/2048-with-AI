@@ -20,4 +20,12 @@ class Block {
     moveDown(){
         this.currentGridPosition.y += 1;
     }
+
+    moveLeft(){
+        this.currentGridPosition.x -= 1;
+    }
+
+    moveRight(){
+        this.currentGridPosition.x += 1;
+    }
 }
