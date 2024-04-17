@@ -1,4 +1,4 @@
-var BLOCK_SIZE = 20;
+const BLOCK_SIZE = 20;
 
 class Block {
     constructor(startingGridPosition, col) {

@@ -5,8 +5,9 @@ const WIDTH = 600;
 // let i_shape;
 // let j_shape;
 // let o_shape;
-// let z_shape;
+// let s_shape;
 // let t_shape;
+// let z_shape;
 
 function setup() {
     window.canvas = createCanvas(WIDTH, HEIGHT);
