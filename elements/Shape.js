@@ -40,7 +40,7 @@ class Shape{
 
         for (let i = 0; i < this.blocks.length; i++) {
 
-            let x_rotated = ((this.blocks[i].currentGridPosition.x - rotationPoint.x) * Math.cos(angle)) - ((rotationPoint.y - this.blocks[i].currentGridPosition.y) * Math.sin(angle)) + rotationPoint.x
+            let x_rotated = ((this.blocks[i].currentGridPosition.x - rotationPoint.x) * Math.cos(angle)) - ((rotationPoint.y - this.blocks[i].currentGridPosition.y) * Math.sin(angle))  + rotationPoint.x;
             let y_rotated = rotationPoint.y - ((rotationPoint.y - this.blocks[i].currentGridPosition.y) * Math.cos(angle)) + ((this.blocks[i].currentGridPosition.x - rotationPoint.x) * Math.sin(angle))
 
             this.blocks[i].currentGridPosition = createVector(int(x_rotated), int(y_rotated));
