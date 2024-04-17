@@ -9,6 +9,8 @@ const WIDTH = 600;
 // let t_shape;
 // let z_shape;
 
+//TODO Make falling and collision
+
 function setup() {
     window.canvas = createCanvas(WIDTH, HEIGHT);
     setShapeIDs();

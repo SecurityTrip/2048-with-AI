@@ -33,7 +33,7 @@ class Shape{
         }
     }
 
-
+    //TODO Make correct rotations
     rotateShape() {
         // Точка вращения — из shapeID
         let rotationPoint = this.shapeID.rotationPoint;
