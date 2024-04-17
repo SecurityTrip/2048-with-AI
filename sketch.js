@@ -1,27 +1,30 @@
-var testShape;
+let testShape;
+const HEIGHT = 600;
+const WIDTH = 600;
 
 // let i_shape;
 // let j_shape;
 // let o_shape;
-// let s_shape;
+// let z_shape;
 // let t_shape;
 
-function setup(){
-    window.canvas = createCanvas(600, 600);
+function setup() {
+    window.canvas = createCanvas(WIDTH, HEIGHT);
     setShapeIDs();
-    testShape = new Shape(t_shape,createVector(10,10))
+    testShape = new Shape(z_shape, createVector(10, 10));
+
+    // // Вызов moveDown() каждую секунду
+    // setInterval(() => {
+    //     testShape.moveDown();
+    // }, 800); // 1000 миллисекунд = 1 секунда
+
+
 }
 
 function draw(){
     background(155);
-    // for (let x = 0; x <= 600; x+=20) {
-    //     line(x,0, x, 600)
-    // }
-    // for (let y = 0; y <= 600; y+=20) {
-    //     line(0,y,600,y)
-    // }
-    for (let x = 0; x < 600; x+=20) {
-        for (let y = 0; y < 600; y+=20) {
+    for (let x = 0; x < WIDTH; x+=20) {
+        for (let y = 0; y < HEIGHT; y+=20) {
             line(x, y, x, y);
         }
     }

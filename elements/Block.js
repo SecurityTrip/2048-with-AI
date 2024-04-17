@@ -1,10 +1,10 @@
 var BLOCK_SIZE = 20;
 
 class Block {
-    constructor(startingGridPosition) {
+    constructor(startingGridPosition, col) {
         this.startingGridPosition = startingGridPosition;
         this.currentGridPosition = startingGridPosition;
-        this.color = color(255, 0, 0);
+        this.color = color(col);
     }
 
     draw(){
