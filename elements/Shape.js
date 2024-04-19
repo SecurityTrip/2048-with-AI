@@ -15,12 +15,6 @@ class Shape{
         }
     }
 
-    moveDown(){
-        for(let block of this.blocks){
-            block.moveDown();
-        }
-    }
-
     moveLeft(){
         for(let block of this.blocks){
             block.moveLeft();
@@ -33,21 +27,92 @@ class Shape{
         }
     }
 
-    //TODO Make correct rotations
-    rotateShape() {
-        let rotationPoint = this.shapeID.rotationPoint;
-        const angle = Math.PI/2;
+    moveDown() {
+        // Сохранение текущих позиций блоков перед перемещением вниз
+        const oldPositions = this.blocks.map(block => block.currentGridPosition.copy());
 
-        for (let i = 0; i < this.blocks.length; i++) {
-
-            let x_rotated = ((this.blocks[i].currentGridPosition.x - rotationPoint.x) * Math.cos(angle)) - ((rotationPoint.y - this.blocks[i].currentGridPosition.y) * Math.sin(angle))  + rotationPoint.x;
-            let y_rotated = rotationPoint.y - ((rotationPoint.y - this.blocks[i].currentGridPosition.y) * Math.cos(angle)) + ((this.blocks[i].currentGridPosition.x - rotationPoint.x) * Math.sin(angle))
-
-            this.blocks[i].currentGridPosition = createVector(int(x_rotated), int(y_rotated));
-
-            // Вывод новой позиции блока
-            console.log(`Block at (${this.blocks[i].currentGridPosition.x}, ${this.blocks[i].currentGridPosition.y})`);
+        // Перемещение вниз
+        for (let block of this.blocks) {
+            block.moveDown();
         }
+
+        // Проверка допустимости новых позиций после перемещения вниз
+        if (!this.checkValidPositions(this.blocks.map(block => block.currentGridPosition))) {
+            // Если позиции недопустимы, отменяем перемещение вниз
+            for (let i = 0; i < this.blocks.length; i++) {
+                this.blocks[i].currentGridPosition = oldPositions[i];
+            }
+        }
+    }
+
+    rotateShape(clockwise = true) {
+        // Сохраняем текущие позиции блоков перед вращением
+        const oldPositions = this.blocks.map(block => block.currentGridPosition.copy());
+
+        // Определяем угол вращения
+        const angle = clockwise ? -Math.PI / 2 : Math.PI / 2;
+
+        // Создаем новую точку вращения
+        const rotationPoint = createVector(
+            this.currentPos.x + this.shapeID.rotationPoint.x,
+            this.currentPos.y + this.shapeID.rotationPoint.y
+        );
+
+        // Временный массив для хранения новых позиций блоков
+        const newPositions = [];
+
+        // Применяем матрицу вращения к каждому блоку
+        for (let block of this.blocks) {
+            // Рассчитываем относительные координаты блоков
+            const relX = block.currentGridPosition.x - rotationPoint.x;
+            const relY = block.currentGridPosition.y - rotationPoint.y;
+
+            // Применяем матрицу вращения
+            const rotatedX = relX * Math.cos(angle) - relY * Math.sin(angle);
+            const rotatedY = relY * Math.cos(angle) + relX * Math.sin(angle);
+
+            // Переводим относительные координаты обратно в абсолютные
+            const newX = Math.round(rotationPoint.x + rotatedX);
+            const newY = Math.round(rotationPoint.y + rotatedY);
+
+            // Добавляем новые позиции в массив
+            newPositions.push(createVector(newX, newY));
+        }
+
+        // Проверка допустимости новых позиций блоков
+        const isValidRotation = this.checkValidPositions(newPositions);
+
+        if (isValidRotation) {
+            // Если позиции допустимы, обновляем текущие позиции блоков
+            for (let i = 0; i < this.blocks.length; i++) {
+                this.blocks[i].currentGridPosition = newPositions[i];
+            }
+        } else {
+            // Если позиции недопустимы, отменяем вращение и восстанавливаем старые позиции
+            for (let i = 0; i < this.blocks.length; i++) {
+                this.blocks[i].currentGridPosition = oldPositions[i];
+            }
+        }
+    }
+
+    checkValidPositions(newPositions) {
+        for (let pos of newPositions) {
+            // Проверка границ игрового поля
+            if (pos.x < 0 || pos.x >= WIDTH || pos.y < 0 || pos.y >= HEIGHT) {
+                return false;
+            }
+
+            // Проверка столкновений с другими блоками
+            // (Зависит от вашей реализации хранения игрового поля)
+            // Например, проверка может выглядеть так:
+            // if (gameBoard[pos.y][pos.x] !== 0) {
+            //     return false;
+            // }
+
+            // Ваша реализация проверки столкновений может отличаться
+        }
+
+        return true;
     }
 }
 
