@@ -1,8 +1,9 @@
 let currentShape;
 let testShape2;
+let gameBoard;
 
-const HEIGHT = 600;
-const WIDTH = 600;
+const HEIGHT = 640;
+const WIDTH = 400;
 
 // let i_shape;
 // let j_shape;
@@ -17,15 +18,15 @@ const WIDTH = 600;
 function setup() {
     window.canvas = createCanvas(WIDTH, HEIGHT);
     setShapeIDs();
+    gameBoard = new GameBoard();
+    gameBoard.print();
     testShape2 = new Shape(l_shape, createVector(4, 4))
-    currentShape = new Shape(t_shape, createVector(1, 1));
+    currentShape = new Shape(z_shape, createVector(1, 1));
 
-    setInterval(() => {
-        moveCurrentShapeDown();
-    }, 500);
+    // setInterval(() => {
+    //     moveCurrentShapeDown();
+    // }, 100);
 }
-
-
 
 function moveCurrentShapeDown() {
     // Вызовите функцию moveDown() для текущей фигуры
@@ -35,6 +36,7 @@ function moveCurrentShapeDown() {
 }
 
 function keyPressed() {
+    clear();
     // Управление вращением
     if (key === 'ArrowUp') {
         if (currentShape) {

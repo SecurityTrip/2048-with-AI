@@ -6,6 +6,7 @@ class Shape{
         for(let pos of shapeID.blockPositions){
             console.log(startingPos + pos);
             this.blocks.push(new Block(createVector(startingPos.x + pos.x, startingPos.y + pos.y), shapeID.color));
+            gameBoard.board[startingPos.y + pos.y][startingPos.x + pos.x] = 1;
         }
     }
 
@@ -19,12 +20,16 @@ class Shape{
         for(let block of this.blocks){
             block.moveLeft();
         }
+        this.currentPos.x -= 1;
+        console.log("Current positions moved to", this.currentPos.x, this.currentPos.y);
     }
 
     moveRight(){
         for(let block of this.blocks){
             block.moveRight();
         }
+        this.currentPos.x += 1;
+        console.log("Current positions moved to", this.currentPos.x, this.currentPos.y);
     }
 
     moveDown() {
@@ -37,43 +42,47 @@ class Shape{
         }
 
         // Проверка допустимости новых позиций после перемещения вниз
-        if (!this.checkValidPositions(this.blocks.map(block => block.currentGridPosition))) {
+        if ((!this.checkValidPositions(this.blocks.map(block => block.currentGridPosition)))) {
             // Если позиции недопустимы, отменяем перемещение вниз
             for (let i = 0; i < this.blocks.length; i++) {
                 this.blocks[i].currentGridPosition = oldPositions[i];
             }
+        }else {
+            this.currentPos.y += 1;
+            console.log("Current positions moved to", this.currentPos.x, this.currentPos.y);
         }
     }
 
     rotateShape(clockwise = true) {
         // Сохраняем текущие позиции блоков перед вращением
-        const oldPositions = this.blocks.map(block => block.currentGridPosition.copy());
+        let oldPositions = this.blocks.map(block => block.currentGridPosition.copy());
 
         // Определяем угол вращения
         const angle = clockwise ? -Math.PI / 2 : Math.PI / 2;
 
+
         // Создаем новую точку вращения
-        const rotationPoint = createVector(
+        let rotationPoint = createVector(
             this.currentPos.x + this.shapeID.rotationPoint.x,
             this.currentPos.y + this.shapeID.rotationPoint.y
         );
 
         // Временный массив для хранения новых позиций блоков
-        const newPositions = [];
+        let newPositions = [];
 
         // Применяем матрицу вращения к каждому блоку
         for (let block of this.blocks) {
             // Рассчитываем относительные координаты блоков
-            const relX = block.currentGridPosition.x - rotationPoint.x;
-            const relY = block.currentGridPosition.y - rotationPoint.y;
+            let relX = block.currentGridPosition.x - rotationPoint.x;
+            let relY = block.currentGridPosition.y - rotationPoint.y;
 
             // Применяем матрицу вращения
-            const rotatedX = relX * Math.cos(angle) - relY * Math.sin(angle);
-            const rotatedY = relY * Math.cos(angle) + relX * Math.sin(angle);
+            let rotatedX = relX * Math.cos(angle) - relY * Math.sin(angle);
+            let rotatedY = relY * Math.cos(angle) + relX * Math.sin(angle);
 
             // Переводим относительные координаты обратно в абсолютные
-            const newX = Math.round(rotationPoint.x + rotatedX);
-            const newY = Math.round(rotationPoint.y + rotatedY);
+            let newX = Math.round(rotationPoint.x + rotatedX);
+            let newY = Math.round(rotationPoint.y + rotatedY);
 
             // Добавляем новые позиции в массив
             newPositions.push(createVector(newX, newY));
@@ -81,6 +90,7 @@ class Shape{
 
         // Проверка допустимости новых позиций блоков
         const isValidRotation = this.checkValidPositions(newPositions);
+
 
         if (isValidRotation) {
             // Если позиции допустимы, обновляем текущие позиции блоков
@@ -98,10 +108,12 @@ class Shape{
     checkValidPositions(newPositions) {
         for (let pos of newPositions) {
             // Проверка границ игрового поля
-            if (pos.x < 0 || pos.x >= WIDTH || pos.y < 0 || pos.y >= HEIGHT) {
+            if (pos.x < 0 || pos.x >= WIDTH/BLOCK_SIZE || pos.y < 0 || pos.y >= HEIGHT/BLOCK_SIZE) {
                 return false;
             }
-
+            // if(gameBoard.board[pos.y][pos.x] == 1){
+            //     return false;
+            // }
             // Проверка столкновений с другими блоками
             // (Зависит от вашей реализации хранения игрового поля)
             // Например, проверка может выглядеть так:
